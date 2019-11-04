@@ -26,14 +26,14 @@ typedef struct
   void *p_pagina;
 }Pagina;
 
-void cargar_segmento(Segmento *segmento);
+void rellenar_segmento(Segmento *segmento);
 int cargar_pagina(Segmento *segmento,int pagina);
 void leer_pagina(Segmento *segmento,int pagina);
 
 int main()
 {
   int pagina_modificar,cargado;
-  Segmento *segmento = malloc(sizeof(tamanio));
+  Segmento *segmento = malloc(sizeof(tamanio));// no sería malloc(tamanio)??
   printf("Ingrese el numero de segmento: ");
   scanf("%d", &segmento->numero_segmento);
   segmento->tamanio_segmento = tamanio;
@@ -48,7 +48,7 @@ int main()
   else
   {
     printf("Segmento cargado de forma correta :)\n");
-    cargar_segmento(segmento);
+    rellenar_segmento(segmento);
     printf("Paginas cargadas de forma correcta\n" );
   }
 
@@ -91,7 +91,7 @@ int cargar_pagina(Segmento *segmento,int pagina)
 }
 
 
-void cargar_segmento(Segmento *segmento)
+void rellenar_segmento(Segmento *segmento)
 {
   Pagina pagina;
   printf("\n\nEl segmento esta ubicado en la direccon %u\n",segmento->p_segmento);
