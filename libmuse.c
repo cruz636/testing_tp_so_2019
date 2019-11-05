@@ -21,15 +21,37 @@ int muse_init() //falta el id,el puerto y la ip como parametros
   //cargamos un segmento a la Memoria_Principal
 
   Segmento *segmento;
-  segmento = muse_alloc(sizeof(Segmento)); //guarda struct de segmento en un puntero
-  segmento->n_segmento = 4;
-  segmento->p_direccion = (MP->bytes_disponibles) + (tamanio_segmento * segmento->n_segmento); // se multiplica por el numero de segmento y obtenemos el marco
 
-  printf("La direccion del segmento %d es %p\n",segmento->n_segmento,segmento->p_direccion);
+  uint32_t tabla_paginas[MP->segmentos_disponibles]; //estamos usando un array de direcciones
+  //podriamos usar un array de segmentos, no se que seria  mas tutorial
+  // Segmento tabla_paginas[MP->segmentos_disponibles];
+  // Segmento *cargar_segmento(int marco, ... , ... , ...);
+
+  int marco,numero_segmento;
+  printf("Ingrese el numero de marco donde quiere cargar el segmento-> " );
+  scanf("%d",&marco );
+  printf("Ingrese el numero del segmento a cargar -> " );
+  scanf("%d",&numero_segmento );
+  printf("Cargando segmento %d en el marco %d\n",numero_segmento,marco );
+
+  tabla_paginas[marco] = cargar_segmento(marco,segmento,numero_segmento,MP);
+
+  if(tabla_paginas[marco] == NULL)
+  {
+    printf("Error al cargar el segmento \n");
+  }
+  else
+  {
+    printf("Segmento cargado de forma correcta en la tabla de paginas\n" );
+  }
+
+
 
   //liberamos segmento y puntero del segmentos_disponibles
  //  muse_free(segmento->p_direccion);
-  muse_free(segmento);
+  //muse_free(segmento);
+
+  //muse_free(tabla_paginas);
 
 
  //liberamos memoria Principal y el puntero que guarda la struct de Memoria_Principal
@@ -39,6 +61,18 @@ int muse_init() //falta el id,el puerto y la ip como parametros
 
   return 0;
 }
+
+
+uint32_t *cargar_segmento(int marco,Segmento *segmento,int numero_segmento,Memoria_Principal *MP)
+{
+  segmento = muse_alloc(sizeof(Segmento)); //guarda struct de segmento en un puntero
+  segmento->n_segmento = numero_segmento;
+  segmento->p_direccion = (MP->bytes_disponibles) + (tamanio_segmento * segmento->n_segmento); // se multiplica por el numero de segmento y obtenemos el marco
+  printf("La direccion del segmento %d es %p\n",segmento->n_segmento,segmento->p_direccion);
+
+  return segmento->p_direccion;
+}
+
 
 /*void muse_close()
 {

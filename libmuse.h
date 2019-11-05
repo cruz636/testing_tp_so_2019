@@ -51,6 +51,7 @@ typedef struct{
 uint32_t *muse_alloc(int tam);
 void muse_free(uint32_t *dir);
 int muse_get(void* dst, uint32_t src, size_t n);
+uint32_t *cargar_segmento(int marco,Segmento *segmento,int numero_segmento,Memoria_Principal *MP);
 
 
 
