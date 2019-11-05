@@ -21,7 +21,8 @@ int muse_init() //falta el id,el puerto y la ip como parametros
   //cargamos un segmento a la Memoria_Principal
 
 
-  uint32_t tabla_paginas[MP->segmentos_disponibles]; //estamos usando un array de direcciones
+  uint32_t tabla_paginas[MP->segmentos_disponibles];
+  //estamos usando un array de direcciones
   //podriamos usar un array de segmentos, no se que seria  mas tutorial
   // Segmento tabla_paginas[MP->segmentos_disponibles];
   // Segmento *cargar_segmento(int marco, ... , ... , ...);
