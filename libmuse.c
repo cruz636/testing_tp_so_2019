@@ -20,7 +20,6 @@ int muse_init() //falta el id,el puerto y la ip como parametros
 
   //cargamos un segmento a la Memoria_Principal
 
-  Segmento *segmento;
 
   uint32_t tabla_paginas[MP->segmentos_disponibles]; //estamos usando un array de direcciones
   //podriamos usar un array de segmentos, no se que seria  mas tutorial
@@ -34,7 +33,8 @@ int muse_init() //falta el id,el puerto y la ip como parametros
   scanf("%d",&numero_segmento );
   printf("Cargando segmento %d en el marco %d\n",numero_segmento,marco );
 
-  tabla_paginas[marco] = cargar_segmento(marco,segmento,numero_segmento,MP);
+  tabla_paginas[marco] = cargar_segmento(marco,numero_segmento,MP); //@MP podria ser directamente la direccion de MP
+  //tabla_paginas[marco] = cargar_segmento(marco,segmento,numero_segmento,MP);
 
   if(tabla_paginas[marco] == NULL)
   {
@@ -63,8 +63,9 @@ int muse_init() //falta el id,el puerto y la ip como parametros
 }
 
 
-uint32_t *cargar_segmento(int marco,Segmento *segmento,int numero_segmento,Memoria_Principal *MP)
+uint32_t cargar_segmento(int marco,int numero_segmento,Memoria_Principal *MP)
 {
+  Segmento *segmento;
   segmento = muse_alloc(sizeof(Segmento)); //guarda struct de segmento en un puntero
   segmento->n_segmento = numero_segmento;
   segmento->p_direccion = (MP->bytes_disponibles) + (tamanio_segmento * segmento->n_segmento); // se multiplica por el numero de segmento y obtenemos el marco
