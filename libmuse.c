@@ -85,17 +85,17 @@ uint32_t cargar_segmento(int marco,int numero_segmento,Memoria_Principal *MP)
 uint32_t *muse_alloc(int tam)
 {
   //reservamos direccion de memoria de tamanio tam
-  int *p_bloque_grande= malloc(tam);
+  int *p_bloque= malloc(tam);
 
-  if(NULL==p_bloque_grande)
+  if(NULL==p_bloque)
   {
-    printf("Error al asignar el bloque de memoria. \n" );
+    printf("Error al asignar la memoria. \n" );
     return 0;
   }
   else
   {
-    printf("La memoria se asigno de forma correcta. %u // %p \n",p_bloque_grande,p_bloque_grande);
-    return p_bloque_grande;
+    printf("La memoria se asigno de forma correcta. %u // %p \n",p_bloque,p_bloque);
+    return p_bloque;
   }
 
 
@@ -109,20 +109,19 @@ uint32_t *muse_alloc(int tam)
  }
 
 
+
+//* Copia una cantidad `n` de bytes desde una posición de memoria de MUSE a una `dst` local.
  int muse_get(void* dst, uint32_t src, size_t n)
  {
    /**
-      * Copia una cantidad `n` de bytes desde una posición de memoria de MUSE a una `dst` local.
       * @param dst Posición de memoria local con tamaño suficiente para almacenar `n` bytes.
       * @param src Posición de memoria de MUSE de donde leer los `n` bytes.
       * @param n Cantidad de bytes a copiar.
       * @return Si pasa un error, retorna -1. Si la operación se realizó correctamente, retorna 0.
       */
-      printf("Direccion donde se copiara el contenido: %p\n",dst);
-      printf("Puntero desde donde se lee: %p\n",src);
-      printf("Cantidad de bytes a leer: %d",n);
 
-      /* controlar que el tamanio de destino sea suficiente
+
+      // controlar que el tamanio de destino sea suficiente
       if(strlen(dst)<strlen(src))
       {
         printf("Tamanio insuficiente\n");
@@ -131,9 +130,24 @@ uint32_t *muse_alloc(int tam)
       else{
         printf("Tamanio suficiente\n");
       }
-     */
 
-   return 0;
+/*      printf("Direccion donde se copiara el contenido: %p\n",dst);
+      printf("Puntero desde donde se lee: %p\n",src);
+      printf("Cantidad de bytes a leer: %d",n);
+*/
+      //copiamos @dst en @src
+      strcpy(dst,src);
+
+      //comparamos que se hayan copiado :
+      if(strcmp(dst,src)==0)
+      {
+        return 1;
+      }
+      else
+      {
+        return ERROR;
+      }
+
  }
 
 

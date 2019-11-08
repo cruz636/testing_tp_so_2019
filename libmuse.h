@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-#define ERROR 1
+#define ERROR -1
 
 //los siguientes datos los sacamos del archivo config.CFG
 #define tamanio_bloque_grande 1024
@@ -24,6 +24,12 @@ typedef struct
   int bit_modif;
   int bit_presen;
   int bit_uso;
+  //?? bitmap;
+
+  /* Utiles?
+  int tamanio_pagina;
+  int tamanio_disponible;
+  int tamanio_usado; */
 
 }Pagina;
 
