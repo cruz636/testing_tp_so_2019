@@ -12,14 +12,14 @@
 #include <unistd.h>
 
 #define ERROR -1
-#define META_SIZE sizeof(Block_meta)
+//#define META_SIZE sizeof(Block_meta)
 
 //los siguientes datos los sacamos del archivo config.CFG
-#define tamaño_MP 512
-#define tamaño_segmento 128
-#define tamaño_pagina 16
-#define cantidad_segmentos (tamaño_MP/tamaño_segmento)
-#define cantidad_paginas (tamaño_segmento/tamaño_pagina)
+#define tamanio_MP 512
+#define tamanio_segmento 128
+#define tamanio_pagina 16
+#define cantidad_segmentos (tamanio_MP/tamanio_segmento)
+#define cantidad_paginas (tamanio_segmento/tamanio_pagina)
 
 
 
@@ -27,26 +27,25 @@
 
 
 
-typedef struct{
+typedef struct
+{
+  uint32_t index;
+  uint32_t size;
+  int isFree;
+} HeapMetadata;
+
+typedef struct
+{
   uint32_t *p_memoriaPrincipal;
   uint32_t *p_inicio_mp;
-  Segmento tabla_segmentos[cantidad_segmentos];
+  uint32_t tabla_paginas[cantidad_segmentos]; // es un array de direcciones
+  //  Segmento tabla_segmentos[cantidad_segmentos]; podemos usar un array de segmentos ?
 } Memoria_Principal;
 
-
-
 typedef struct
 {
   HeapMetadata heap;
-  uint32_t *p_inicio_segmento;
-  Pagina tabla_paginas[cantidad_paginas];
-
-}Segmento;
-
-typedef struct
-{
-  HeapMetadata heap;
-  Pagina *next_pagina;
+  //Pagina *next_pagina;
   //?? bitmap;
 
   /* Utiles?
@@ -57,11 +56,18 @@ typedef struct
 }Pagina;
 
 
-typedef​ ​struct​ {
-  uint32_t index;
-  uint32_t size;
-  Bool​ isFree;
-}​HeapMetadata​ ;
+typedef struct
+{
+  HeapMetadata heap;
+  int n_segmento;
+  uint32_t *p_inicio_segmento;
+  Pagina tabla_paginas[cantidad_paginas];
+
+}Segmento;
+
+
+
+
 
 /*
 typedef struct
@@ -78,7 +84,7 @@ typedef struct
 
 //Variables globales
 
-void *global_base = NULL;
+//void *global_base = NULL;
 
 //Fin de variables globales
 //-------------------------
